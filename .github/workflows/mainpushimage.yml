@@ -1,0 +1,29 @@
+name: Publish Docker Image
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'version of the container image'
+        required: true 
+      image:
+        description: 'name of the container image'
+        required: true 
+        default: "doraj/github-action-pandoc"
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Docker Hub login
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+      
+      - name: Push image to Docker Hub
+        run: |
+          VERSION="${{ github.event.inputs.version }}" 
+          IMAGE_NAME="${{ github.event.inputs.image }}"
+          TAG="$IMAGE_NAME:$VERSION"
+          docker build . --file Dockerfile --tag $IMAGE_NAME --label "org.opencontainers.image.version=$VERSION"
+          docker tag $IMAGE_NAME $TAG
+
+          docker push $TAG
