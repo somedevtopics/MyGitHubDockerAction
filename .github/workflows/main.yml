@@ -1,0 +1,16 @@
+name: Generate PDF
+on:
+  workflow_dispatch: # déclenchement manuel
+  push:              # et à chaque commit sur la branche principale
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: somedevtopics/MyGitHubDockerAction@main # remplacer par votre action
+        with:
+          args: "--standalone --output=readme.pdf readme.md"
+      - uses: actions/upload-artifact@v1
+        with:
+          name: "PDF"
+          path: readme.pdf
