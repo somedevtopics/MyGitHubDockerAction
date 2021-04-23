@@ -9,7 +9,4 @@ jobs:
       matrix:
         server: [prod1, prod2, prod3, prod4, prod5, prod6, prod7, prod8]
     steps:
-      - name: Deploy application
-        uses: lgmorand/deploy-app@v1
-        with:
-          server: ${{ matrix.server}}
+      - run: echo " j'imprime ${{ matrix.server}}"
