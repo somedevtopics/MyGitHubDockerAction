@@ -1,7 +1,6 @@
 name: Generate parellele
 on:
   workflow_dispatch: # déclenchement manuel
-  push:              # et à chaque commit sur la branche principale
 jobs:
   generate:
     runs-on: ubuntu-latest
