@@ -2,6 +2,10 @@ name: Generate parellele
 on:
   workflow_dispatch: # déclenchement manuel
 jobs:
+  envar:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "${{ toJson(github) }}"
   generate:
     runs-on: ubuntu-latest
     strategy:
